@@ -9,13 +9,16 @@ class HuabanSpider(scrapy.Spider):
     name = 'huaban'
     allowed_domains = ['huaban.com']
     url = 'http://huaban.com/favorite/beauty/'
-    async_url = 'http://huaban.com/favorite/beauty/?max={}&limit=20&wfl=1'
+    async_url = 'http://huaban.com/favorite/beauty/?max={}&limit=100&wfl=1'
     start_urls = [url]
     download_url = 'http://img.hb.aicdn.com/'
     json_headers = {
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9',
         'Accept': 'application/json',
         'X-Request': 'JSON',
-        'X-Requested-With': 'XMLHttpRequest'
+        'X-Requested-With': 'XMLHttpRequest',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
     }
 
     def parse(self, response):
@@ -41,7 +44,7 @@ class HuabanSpider(scrapy.Spider):
             item['image_urls'] = image_urls
             yield item
             print next_pin_id
-            if next_pin_id:
-                yield scrapy.Request(
-                    self.async_url.format(next_pin_id), callback=self.parse_json, headers=self.json_headers)
+            # if next_pin_id:
+            #     yield scrapy.Request(
+            #         self.async_url.format(next_pin_id), callback=self.parse_json, headers=self.json_headers)
 

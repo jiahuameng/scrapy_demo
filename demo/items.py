@@ -14,3 +14,8 @@ class HuabanImgItem(scrapy.Item):
     image_urls = scrapy.Field()
     images = scrapy.Field()
     image_paths = scrapy.Field()
+
+
+class MacroDataItem(scrapy.Item):
+    name = scrapy.Field()
+    data = scrapy.Field()
